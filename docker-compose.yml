@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: mephi-db-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./databases/01_vehicles/schema.sql:/docker-entrypoint-initdb.d/01_vehicles.sql
+      - ./databases/02_racing/schema.sql:/docker-entrypoint-initdb.d/02_racing.sql
+      - ./databases/03_hotels/schema.sql:/docker-entrypoint-initdb.d/03_hotels.sql
+      - ./databases/04_organization/schema.sql:/docker-entrypoint-initdb.d/04_organization.sql
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

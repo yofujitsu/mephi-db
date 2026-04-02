@@ -1,15 +1,15 @@
-# MEPHI Database Final Assignment (SQL)
+# Итоговое задание по базам данных (SQL)
 
-This project contains SQL solutions for the final assignment in the Database Management course at MEPhI. The assignment consists of 13 tasks across 4 different databases, implemented in PostgreSQL.
+Проект содержит SQL-решения для итогового задания по курсу «Управление базами данных» в НИЯУ МИФИ. Задание состоит из 13 задач across 4 различных баз данных, реализованных в PostgreSQL.
 
-## Project Structure
+## Структура проекта
 
 ```
 sql_2sem/
 ├── databases/
 │   ├── 01_vehicles/
-│   │   ├── schema.sql      # Database schema and data
-│   │   └── solutions.sql   # Task solutions
+│   │   ├── schema.sql      # Схема базы данных и данные
+│   │   └── solutions.sql   # Решения задач
 │   ├── 02_racing/
 │   │   ├── schema.sql
 │   │   └── solutions.sql
@@ -23,128 +23,128 @@ sql_2sem/
 └── README.md
 ```
 
-## Databases Overview
+## Обзор баз данных
 
-### 1. Vehicles Database
-Manages information about vehicles including cars, motorcycles, and bicycles.
+### 1. Транспортные средства
+Управление информацией о транспортных средствах: автомобили, мотоциклы и велосипеды.
 
-**Tables:**
-- `Vehicle` - Base table with manufacturer, model, and type
-- `Car` - Car-specific attributes (engine capacity, horsepower, price, transmission)
-- `Motorcycle` - Motorcycle-specific attributes (engine capacity, horsepower, price, type)
-- `Bicycle` - Bicycle-specific attributes (gear count, price, type)
+**Таблицы:**
+- `Vehicle` — базовая таблица с производителем, моделью и типом
+- `Car` — характеристики автомобилей (объём двигателя, мощность, цена, трансмиссия)
+- `Motorcycle` — характеристики мотоциклов (объём двигателя, мощность, цена, тип)
+- `Bicycle` — характеристики велосипедов (количество передач, цена, тип)
 
-**Tasks:**
-- Task 1: Query motorcycles with specific criteria (horsepower > 150, price < $20000, Sport type)
-- Task 2: Combined query for vehicles matching different criteria using UNION
+**Задачи:**
+- Задача 1: Запрос мотоциклов с заданными критериями (мощность > 150 л.с., цена < $20000, тип Sport)
+- Задача 2: Комбинированный запрос транспортных средств с различными критериями с использованием UNION
 
-### 2. Racing Database
-Tracks car racing information including classes, cars, races, and results.
+### 2. Автомобильные гонки
+Отслеживание информации об автомобильных гонках: классы, автомобили, гонки и результаты.
 
-**Tables:**
-- `Classes` - Car classes with type, country, specifications
-- `Cars` - Car names linked to classes
-- `Races` - Race names and dates
-- `Results` - Race results linking cars to races with positions
+**Таблицы:**
+- `Classes` — классы автомобилей с типом, страной, спецификациями
+- `Cars` — названия автомобилей, привязанные к классам
+- `Races` — названия гонок и даты
+- `Results` — результаты гонок, связывающие автомобили с гонками и позициями
 
-**Tasks:**
-- Task 1: Find cars with best average position per class
-- Task 2: Find the overall best performing car
-- Task 3: Find classes with best average positions and total races
-- Task 4: Find cars better than their class average
-- Task 5: Find classes with most cars having low average positions (> 3.0)
+**Задачи:**
+- Задача 1: Найти автомобили с наилучшей средней позицией в каждом классе
+- Задача 2: Найти автомобиль с наилучшей общей средней позицией
+- Задача 3: Найти классы с наилучшей средней позицией и общим количеством гонок
+- Задача 4: Найти автомобили со средней позицией лучше средней по классу
+- Задача 5: Найти классы с наибольшим количеством автомобилей с низкой средней позицией (> 3.0)
 
-### 3. Hotels Database
-Manages hotel bookings, customers, and rooms.
+### 3. Бронирование отелей
+Управление бронированиями отелей, клиентами и номерами.
 
-**Tables:**
-- `Hotel` - Hotel information (name, location)
-- `Room` - Room details (type, price, capacity)
-- `Customer` - Customer information (name, email, phone)
-- `Booking` - Booking records with check-in/check-out dates
+**Таблицы:**
+- `Hotel` — информация об отелях (название, расположение)
+- `Room` — детали номеров (тип, цена, вместимость)
+- `Customer` — информация о клиентах (имя, email, телефон)
+- `Booking` — записи о бронированиях с датами заезда и выезда
 
-**Tasks:**
-- Task 1: Find customers with more than 2 bookings in different hotels
-- Task 2: Analyze customers with >2 bookings and >$500 spent
-- Task 3: Categorize hotels by price and determine customer preferences
+**Задачи:**
+- Задача 1: Найти клиентов, сделавших более двух бронирований в разных отелях
+- Задача 2: Анализ клиентов с >2 бронированиями и суммой трат >$500
+- Задача 3: Категоризация отелей по цене и определение предпочтений клиентов
 
-### 4. Organization Database
-Represents company structure with employees, departments, roles, projects, and tasks.
+### 4. Структура организации
+Представляет структуру компании с сотрудниками, отделами, ролями, проектами и задачами.
 
-**Tables:**
-- `Departments` - Department names
-- `Roles` - Role titles
-- `Employees` - Employee hierarchy with manager relationships
-- `Projects` - Projects linked to departments
-- `Tasks` - Tasks assigned to employees
+**Таблицы:**
+- `Departments` — названия отделов
+- `Roles` — названия ролей
+- `Employees` — иерархия сотрудников с отношениями подчинения
+- `Projects` — проекты, привязанные к отделам
+- `Tasks` — задачи, назначенные сотрудникам
 
-**Tasks:**
-- Task 1: Recursive query to find all employees under the CEO (Иван Иванов)
-- Task 2: Recursive query with task counts and subordinate counts
-- Task 3: Find managers with subordinates using RECURSIVE
+**Задачи:**
+- Задача 1: Рекурсивный запрос для нахождения всех сотрудников, подчиняющихся генеральному директору (Иван Иванов)
+- Задача 2: Рекурсивный запрос с подсчётом задач и подчинённых
+- Задача 3: Найти менеджеров с подчинёнными с использованием RECURSIVE
 
-## Requirements
+## Требования
 
-- Docker and Docker Compose
-- PostgreSQL client (psql) or pgAdmin
+- Docker и Docker Compose
+- Клиент PostgreSQL (psql) или pgAdmin
 
-## Quick Start
+## Быстрый старт
 
-### Using Docker Compose
+### Использование Docker Compose
 
-1. Start the PostgreSQL container with all databases:
+1. Запустите контейнер PostgreSQL со всеми базами данных:
    ```bash
    docker-compose up -d
    ```
 
-2. Connect to PostgreSQL:
+2. Подключитесь к PostgreSQL:
    ```bash
    docker exec -it mephi-db-postgres psql -U postgres
    ```
 
-3. Run queries from the solutions files:
+3. Выполните запросы из файлов решений:
    ```bash
    docker exec -i mephi-db-postgres psql -U postgres -f /docker-entrypoint-initdb.d/01_vehicles.sql
    ```
 
-### Manual Setup
+### Ручная настройка
 
-1. Create a PostgreSQL database:
+1. Создайте базу данных PostgreSQL:
    ```bash
    createdb -U postgres vehicles
    ```
 
-2. Load the schema:
+2. Загрузите схему:
    ```bash
    psql -U postgres -d vehicles -f databases/01_vehicles/schema.sql
    ```
 
-3. Run solutions:
+3. Выполните решения:
    ```bash
    psql -U postgres -d vehicles -f databases/01_vehicles/solutions.sql
    ```
 
-## Testing
+## Тестирование
 
-To verify the solutions:
+Для проверки решений:
 
-1. Start the Docker container
-2. Connect to each database
-3. Execute the corresponding solutions.sql file
-4. Compare output with expected results from AGENTS.md
+1. Запустите Docker-контейнер
+2. Подключитесь к каждой базе данных
+3. Выполните соответствующий файл solutions.sql
+4. Сравните вывод с ожидаемыми результатами из AGENTS.md
 
-## Key SQL Features Used
+## Используемые возможности SQL
 
-- **JOIN operations**: INNER JOIN, LEFT JOIN
-- **Set operations**: UNION, UNION ALL
-- **Aggregate functions**: COUNT, SUM, AVG, MIN, MAX
-- **Window functions**: SUM() OVER (PARTITION BY ...)
-- **Common Table Expressions (CTEs)**: WITH clause
-- **Recursive CTEs**: WITH RECURSIVE for hierarchical queries
-- **String aggregation**: STRING_AGG for concatenating values
-- **Conditional logic**: CASE WHEN expressions
-- **Filtering**: HAVING clause for grouped data
+- **Операции JOIN**: INNER JOIN, LEFT JOIN
+- **Операции над множествами**: UNION, UNION ALL
+- **Агрегатные функции**: COUNT, SUM, AVG, MIN, MAX
+- **Оконные функции**: SUM() OVER (PARTITION BY ...)
+- **Обобщённые табличные выражения (CTE)**: WITH
+- **Рекурсивные CTE**: WITH RECURSIVE для иерархических запросов
+- **Агрегация строк**: STRING_AGG для конкатенации значений
+- **Условная логика**: CASE WHEN
+- **Фильтрация**: HAVING для группированных данных
 
-## Author
+## Автор
 
-Final assignment for Database Management course at MEPhI.
+Итоговое задание по курсу «Управление базами данных» в НИЯУ МИФИ.

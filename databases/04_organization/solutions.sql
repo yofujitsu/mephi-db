@@ -1,8 +1,8 @@
--- Database 4: Organization
--- Task 1: Find all employees under Ivan Ivanov (EmployeeID = 1) using RECURSIVE
+-- База данных 4: Структура организации
+-- Задача 1: Найти всех сотрудников, подчиняющихся Ивану Иванову (EmployeeID = 1), с использованием RECURSIVE
 
 WITH RECURSIVE hierarchy AS (
-    SELECT 
+    SELECT
         e.EmployeeID,
         e.Name,
         e.ManagerID,
@@ -11,10 +11,10 @@ WITH RECURSIVE hierarchy AS (
         0 AS level
     FROM Employees e
     WHERE e.EmployeeID = 1
-    
+
     UNION ALL
-    
-    SELECT 
+
+    SELECT
         e.EmployeeID,
         e.Name,
         e.ManagerID,
@@ -25,7 +25,7 @@ WITH RECURSIVE hierarchy AS (
     JOIN hierarchy h ON e.ManagerID = h.EmployeeID
 ),
 employee_projects AS (
-    SELECT 
+    SELECT
         e.EmployeeID,
         STRING_AGG(DISTINCT p.ProjectName, ', ' ORDER BY p.ProjectName) AS ProjectNames
     FROM Employees e
@@ -33,14 +33,14 @@ employee_projects AS (
     GROUP BY e.EmployeeID
 ),
 employee_tasks AS (
-    SELECT 
+    SELECT
         e.EmployeeID,
         STRING_AGG(DISTINCT t.TaskName, ', ' ORDER BY t.TaskName) AS TaskNames
     FROM Employees e
     LEFT JOIN Tasks t ON e.EmployeeID = t.AssignedTo
     GROUP BY e.EmployeeID
 )
-SELECT 
+SELECT
     h.EmployeeID,
     h.Name AS EmployeeName,
     h.ManagerID,
@@ -55,10 +55,10 @@ LEFT JOIN employee_projects ep ON h.EmployeeID = ep.EmployeeID
 LEFT JOIN employee_tasks et ON h.EmployeeID = et.EmployeeID
 ORDER BY h.Name;
 
--- Task 2: Find all employees under Ivan Ivanov with task and subordinate counts
+-- Задача 2: Найти всех сотрудников, подчиняющихся Ивану Иванову, с количеством задач и подчиненных
 
 WITH RECURSIVE hierarchy AS (
-    SELECT 
+    SELECT
         e.EmployeeID,
         e.Name,
         e.ManagerID,
@@ -67,10 +67,10 @@ WITH RECURSIVE hierarchy AS (
         0 AS level
     FROM Employees e
     WHERE e.EmployeeID = 1
-    
+
     UNION ALL
-    
-    SELECT 
+
+    SELECT
         e.EmployeeID,
         e.Name,
         e.ManagerID,
@@ -81,7 +81,7 @@ WITH RECURSIVE hierarchy AS (
     JOIN hierarchy h ON e.ManagerID = h.EmployeeID
 ),
 employee_projects AS (
-    SELECT 
+    SELECT
         e.EmployeeID,
         STRING_AGG(DISTINCT p.ProjectName, ', ' ORDER BY p.ProjectName) AS ProjectNames
     FROM Employees e
@@ -89,7 +89,7 @@ employee_projects AS (
     GROUP BY e.EmployeeID
 ),
 employee_tasks AS (
-    SELECT 
+    SELECT
         e.EmployeeID,
         STRING_AGG(DISTINCT t.TaskName, ', ' ORDER BY t.TaskName) AS TaskNames,
         COUNT(DISTINCT t.TaskID) AS TotalTasks
@@ -98,13 +98,13 @@ employee_tasks AS (
     GROUP BY e.EmployeeID
 ),
 subordinate_count AS (
-    SELECT 
+    SELECT
         ManagerID,
         COUNT(*) AS TotalSubordinates
     FROM Employees
     GROUP BY ManagerID
 )
-SELECT 
+SELECT
     h.EmployeeID,
     h.Name AS EmployeeName,
     h.ManagerID,
@@ -122,19 +122,19 @@ LEFT JOIN employee_tasks et ON h.EmployeeID = et.EmployeeID
 LEFT JOIN subordinate_count sc ON h.EmployeeID = sc.ManagerID
 ORDER BY h.Name;
 
--- Task 3: Find managers with subordinates using RECURSIVE
+-- Задача 3: Найти менеджеров с подчиненными с использованием RECURSIVE
 
 WITH RECURSIVE hierarchy AS (
-    SELECT 
+    SELECT
         e.EmployeeID,
         e.Name,
         e.ManagerID,
         e.DepartmentID,
         e.RoleID
-    
+
     UNION ALL
-    
-    SELECT 
+
+    SELECT
         e.EmployeeID,
         e.Name,
         e.ManagerID,
@@ -144,7 +144,7 @@ WITH RECURSIVE hierarchy AS (
     JOIN hierarchy h ON e.ManagerID = h.EmployeeID
 ),
 all_subordinates AS (
-    SELECT 
+    SELECT
         h.EmployeeID AS manager_id,
         COUNT(DISTINCT sub.EmployeeID) AS TotalSubordinates
     FROM hierarchy h
@@ -155,7 +155,7 @@ all_subordinates AS (
     GROUP BY h.EmployeeID
 ),
 manager_subordinates AS (
-    SELECT 
+    SELECT
         e.EmployeeID,
         COUNT(DISTINCT sub.EmployeeID) AS TotalSubordinates
     FROM Employees e
@@ -165,7 +165,7 @@ manager_subordinates AS (
     HAVING COUNT(DISTINCT sub.EmployeeID) > 0
 ),
 employee_projects AS (
-    SELECT 
+    SELECT
         e.EmployeeID,
         STRING_AGG(DISTINCT p.ProjectName, ', ' ORDER BY p.ProjectName) AS ProjectNames
     FROM Employees e
@@ -173,14 +173,14 @@ employee_projects AS (
     GROUP BY e.EmployeeID
 ),
 employee_tasks AS (
-    SELECT 
+    SELECT
         e.EmployeeID,
         STRING_AGG(DISTINCT t.TaskName, ', ' ORDER BY t.TaskName) AS TaskNames
     FROM Employees e
     LEFT JOIN Tasks t ON e.EmployeeID = t.AssignedTo
     GROUP BY e.EmployeeID
 )
-SELECT 
+SELECT
     e.EmployeeID,
     e.Name AS EmployeeName,
     e.ManagerID,

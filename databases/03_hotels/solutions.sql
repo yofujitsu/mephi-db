@@ -1,8 +1,8 @@
--- Database 3: Hotels
--- Task 1: Find customers with more than 2 bookings in different hotels
+-- База данных 3: Бронирование отелей
+-- Задача 1: Найти клиентов, сделавших более двух бронирований в разных отелях
 
 WITH customer_bookings AS (
-    SELECT 
+    SELECT
         c.ID_customer,
         c.name,
         c.email,
@@ -17,7 +17,7 @@ WITH customer_bookings AS (
     GROUP BY c.ID_customer, c.name, c.email, c.phone
     HAVING COUNT(b.ID_booking) > 2
 )
-SELECT 
+SELECT
     name,
     email,
     phone,
@@ -27,10 +27,10 @@ SELECT
 FROM customer_bookings
 ORDER BY total_bookings DESC;
 
--- Task 2: Find customers with more than 2 bookings and more than $500 spent
+-- Задача 2: Найти клиентов с более чем 2 бронированиями и суммой трат более $500
 
 WITH customer_stats AS (
-    SELECT 
+    SELECT
         c.ID_customer,
         c.name,
         COUNT(b.ID_booking) AS total_bookings,
@@ -42,26 +42,26 @@ WITH customer_stats AS (
     JOIN Hotel h ON r.ID_hotel = h.ID_hotel
     GROUP BY c.ID_customer, c.name
 )
-SELECT 
+SELECT
     ID_customer,
     name,
     total_bookings,
     total_spent,
     unique_hotels
 FROM customer_stats
-WHERE total_bookings > 2 
-    AND unique_hotels > 1 
+WHERE total_bookings > 2
+    AND unique_hotels > 1
     AND total_spent > 500
 ORDER BY total_spent;
 
--- Task 3: Customer hotel preferences based on hotel category
+-- Задача 3: Предпочтения клиентов по типу отелей на основе категории цен
 
 WITH hotel_avg_price AS (
-    SELECT 
+    SELECT
         h.ID_hotel,
         h.name AS hotel_name,
         AVG(r.price) AS avg_price,
-        CASE 
+        CASE
             WHEN AVG(r.price) < 175 THEN 'Дешевый'
             WHEN AVG(r.price) BETWEEN 175 AND 300 THEN 'Средний'
             ELSE 'Дорогой'
@@ -71,7 +71,7 @@ WITH hotel_avg_price AS (
     GROUP BY h.ID_hotel, h.name
 ),
 customer_hotels AS (
-    SELECT 
+    SELECT
         c.ID_customer,
         c.name,
         hcp.hotel_category,
@@ -82,10 +82,10 @@ customer_hotels AS (
     JOIN hotel_avg_price hcp ON r.ID_hotel = hcp.ID_hotel
 ),
 customer_preference AS (
-    SELECT 
+    SELECT
         ID_customer,
         name,
-        CASE 
+        CASE
             WHEN MAX(CASE WHEN hotel_category = 'Дорогой' THEN 1 ELSE 0 END) = 1 THEN 'Дорогой'
             WHEN MAX(CASE WHEN hotel_category = 'Средний' THEN 1 ELSE 0 END) = 1 THEN 'Средний'
             ELSE 'Дешевый'
@@ -94,13 +94,13 @@ customer_preference AS (
     FROM customer_hotels
     GROUP BY ID_customer, name
 )
-SELECT 
+SELECT
     ID_customer,
     name,
     preferred_hotel_type,
     visited_hotels
 FROM customer_preference
-ORDER BY 
+ORDER BY
     CASE preferred_hotel_type
         WHEN 'Дешевый' THEN 1
         WHEN 'Средний' THEN 2

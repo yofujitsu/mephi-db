@@ -1,8 +1,8 @@
--- Database 2: Racing
--- Task 1: Find cars with best average position per class
+-- База данных 2: Автомобильные гонки
+-- Задача 1: Найти автомобили с наилучшей средней позицией в каждом классе
 
 WITH car_stats AS (
-    SELECT 
+    SELECT
         c.name AS car_name,
         c.class AS car_class,
         AVG(r.position) AS average_position,
@@ -12,13 +12,13 @@ WITH car_stats AS (
     GROUP BY c.name, c.class
 ),
 best_per_class AS (
-    SELECT 
+    SELECT
         car_class,
         MIN(average_position) AS min_avg_position
     FROM car_stats
     GROUP BY car_class
 )
-SELECT 
+SELECT
     cs.car_name,
     cs.car_class,
     cs.average_position,
@@ -27,10 +27,10 @@ FROM car_stats cs
 JOIN best_per_class bpc ON cs.car_class = bpc.car_class AND cs.average_position = bpc.min_avg_position
 ORDER BY cs.average_position;
 
--- Task 2: Find the car with the best overall average position
+-- Задача 2: Найти автомобиль с наилучшей общей средней позицией
 
 WITH car_stats AS (
-    SELECT 
+    SELECT
         c.name AS car_name,
         c.class AS car_class,
         AVG(r.position) AS average_position,
@@ -41,7 +41,7 @@ WITH car_stats AS (
     JOIN Classes cl ON c.class = cl.class
     GROUP BY c.name, c.class, cl.country
 )
-SELECT 
+SELECT
     car_name,
     car_class,
     average_position,
@@ -52,10 +52,10 @@ WHERE average_position = (SELECT MIN(average_position) FROM car_stats)
 ORDER BY car_name
 LIMIT 1;
 
--- Task 3: Find classes with best average position and their total races
+-- Задача 3: Найти классы с наилучшей средней позицией и их общее количество гонок
 
 WITH car_stats AS (
-    SELECT 
+    SELECT
         c.name AS car_name,
         c.class AS car_class,
         AVG(r.position) AS average_position,
@@ -74,7 +74,7 @@ best_classes AS (
     FROM car_stats
     WHERE average_position = (SELECT min_avg FROM best_avg)
 )
-SELECT 
+SELECT
     cs.car_name,
     cs.car_class,
     cs.average_position,
@@ -84,10 +84,10 @@ SELECT
 FROM car_stats cs
 JOIN best_classes bc ON cs.car_class = bc.car_class;
 
--- Task 4: Find cars with better average position than their class average (classes with at least 2 cars)
+-- Задача 4: Найти автомобили со средней позицией лучше средней по классу (классы с минимум 2 автомобилями)
 
 WITH car_stats AS (
-    SELECT 
+    SELECT
         c.name AS car_name,
         c.class AS car_class,
         AVG(r.position) AS average_position,
@@ -99,7 +99,7 @@ WITH car_stats AS (
     GROUP BY c.name, c.class, cl.country
 ),
 class_stats AS (
-    SELECT 
+    SELECT
         car_class,
         AVG(average_position) AS class_avg_position,
         COUNT(*) AS car_count
@@ -107,7 +107,7 @@ class_stats AS (
     GROUP BY car_class
     HAVING COUNT(*) >= 2
 )
-SELECT 
+SELECT
     cs.car_name,
     cs.car_class,
     cs.average_position,
@@ -118,10 +118,10 @@ JOIN class_stats cls ON cs.car_class = cls.car_class
 WHERE cs.average_position < cls.class_avg_position
 ORDER BY cs.car_class, cs.average_position;
 
--- Task 5: Find classes with most cars having low average position (> 3.0)
+-- Задача 5: Найти классы с наибольшим количеством автомобилей с низкой средней позицией (> 3.0)
 
 WITH car_stats AS (
-    SELECT 
+    SELECT
         c.name AS car_name,
         c.class AS car_class,
         AVG(r.position) AS average_position,
@@ -133,7 +133,7 @@ WITH car_stats AS (
     GROUP BY c.name, c.class, cl.country
 ),
 class_low_count AS (
-    SELECT 
+    SELECT
         car_class,
         COUNT(*) AS low_position_count
     FROM car_stats
@@ -150,13 +150,13 @@ target_classes AS (
     WHERE low_position_count = (SELECT max_count FROM max_low_count)
 ),
 class_total_races AS (
-    SELECT 
+    SELECT
         car_class,
         SUM(race_count) AS total_races
     FROM car_stats
     GROUP BY car_class
 )
-SELECT 
+SELECT
     cs.car_name,
     cs.car_class,
     cs.average_position,

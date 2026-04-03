@@ -13,6 +13,10 @@ services:
       - ./databases/02_racing/schema.sql:/docker-entrypoint-initdb.d/02_racing.sql
       - ./databases/03_hotels/schema.sql:/docker-entrypoint-initdb.d/03_hotels.sql
       - ./databases/04_organization/schema.sql:/docker-entrypoint-initdb.d/04_organization.sql
+      - ./databases/01_vehicles/solutions.sql:/solutions/01_vehicles_solutions.sql
+      - ./databases/02_racing/solutions.sql:/solutions/02_racing_solutions.sql
+      - ./databases/03_hotels/solutions.sql:/solutions/03_hotels_solutions.sql
+      - ./databases/04_organization/solutions.sql:/solutions/04_organization_solutions.sql
       - postgres_data:/var/lib/postgresql/data
 
 volumes:

@@ -124,13 +124,15 @@ ORDER BY h.Name;
 
 -- Задача 3: Найти менеджеров с подчиненными с использованием RECURSIVE
 
-WITH RECURSIVE hierarchy AS (
+WITH RECURSIVE emp_hierarchy AS (
     SELECT
-        e.EmployeeID,
-        e.Name,
-        e.ManagerID,
-        e.DepartmentID,
-        e.RoleID
+        EmployeeID,
+        Name,
+        ManagerID,
+        DepartmentID,
+        RoleID
+    FROM Employees
+    WHERE EmployeeID = 1
 
     UNION ALL
 
@@ -141,28 +143,17 @@ WITH RECURSIVE hierarchy AS (
         e.DepartmentID,
         e.RoleID
     FROM Employees e
-    JOIN hierarchy h ON e.ManagerID = h.EmployeeID
-),
-all_subordinates AS (
-    SELECT
-        h.EmployeeID AS manager_id,
-        COUNT(DISTINCT sub.EmployeeID) AS TotalSubordinates
-    FROM hierarchy h
-    JOIN hierarchy sub ON sub.ManagerID = h.EmployeeID OR sub.EmployeeID IN (
-        SELECT EmployeeID FROM hierarchy WHERE ManagerID = h.EmployeeID
-    )
-    WHERE h.EmployeeID != sub.EmployeeID
-    GROUP BY h.EmployeeID
+    JOIN emp_hierarchy h ON e.ManagerID = h.EmployeeID
 ),
 manager_subordinates AS (
     SELECT
-        e.EmployeeID,
-        COUNT(DISTINCT sub.EmployeeID) AS TotalSubordinates
-    FROM Employees e
-    JOIN hierarchy sub ON sub.ManagerID = e.EmployeeID
-    WHERE e.RoleID = 1
-    GROUP BY e.EmployeeID
-    HAVING COUNT(DISTINCT sub.EmployeeID) > 0
+        manager.EmployeeID,
+        COUNT(DISTINCT subordinate.EmployeeID) AS TotalSubordinates
+    FROM emp_hierarchy manager
+    JOIN emp_hierarchy subordinate ON subordinate.ManagerID = manager.EmployeeID
+    WHERE manager.RoleID = 1
+    GROUP BY manager.EmployeeID
+    HAVING COUNT(DISTINCT subordinate.EmployeeID) > 0
 ),
 employee_projects AS (
     SELECT

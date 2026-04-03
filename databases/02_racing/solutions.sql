@@ -137,17 +137,8 @@ class_low_count AS (
         car_class,
         COUNT(*) AS low_position_count
     FROM car_stats
-    WHERE average_position > 3.0
+    WHERE average_position >= 3.0
     GROUP BY car_class
-),
-max_low_count AS (
-    SELECT MAX(low_position_count) AS max_count
-    FROM class_low_count
-),
-target_classes AS (
-    SELECT car_class
-    FROM class_low_count
-    WHERE low_position_count = (SELECT max_count FROM max_low_count)
 ),
 class_total_races AS (
     SELECT
@@ -165,7 +156,6 @@ SELECT
     ctr.total_races,
     clc.low_position_count
 FROM car_stats cs
-JOIN target_classes tc ON cs.car_class = tc.car_class
 JOIN class_low_count clc ON cs.car_class = clc.car_class
 JOIN class_total_races ctr ON cs.car_class = ctr.car_class
 ORDER BY clc.low_position_count DESC, cs.car_class;

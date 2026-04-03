@@ -1,7 +1,3 @@
--- Database 1: Vehicles
--- Schema and data for vehicles (cars, motorcycles, bicycles)
-
--- Creating Vehicle table
 CREATE TABLE Vehicle (
 	maker VARCHAR(100) NOT NULL,
 	model VARCHAR(100) NOT NULL,
@@ -9,7 +5,6 @@ CREATE TABLE Vehicle (
 	PRIMARY KEY (model)
 );
 
--- Creating Car table
 CREATE TABLE Car (
 	vin VARCHAR(17) NOT NULL,
 	model VARCHAR(100) NOT NULL,
@@ -21,7 +16,6 @@ CREATE TABLE Car (
 	FOREIGN KEY (model) REFERENCES Vehicle(model)
 );
 
--- Creating Motorcycle table
 CREATE TABLE Motorcycle (
 	vin VARCHAR(17) NOT NULL,
 	model VARCHAR(100) NOT NULL,
@@ -33,7 +27,6 @@ CREATE TABLE Motorcycle (
 	FOREIGN KEY (model) REFERENCES Vehicle(model)
 );
 
--- Creating Bicycle table
 CREATE TABLE Bicycle (
 	serial_number VARCHAR(20) NOT NULL,
 	model VARCHAR(100) NOT NULL,
@@ -44,7 +37,6 @@ CREATE TABLE Bicycle (
 	FOREIGN KEY (model) REFERENCES Vehicle(model)
 );
 
--- Inserting data into Vehicle table
 INSERT INTO Vehicle (maker, model, type) VALUES
 ('Toyota', 'Camry', 'Car'),
 ('Honda', 'Civic', 'Car'),
@@ -56,19 +48,16 @@ INSERT INTO Vehicle (maker, model, type) VALUES
 ('Giant', 'Defy', 'Bicycle'),
 ('Specialized', 'Stumpjumper', 'Bicycle');
 
--- Inserting data into Car table
 INSERT INTO Car (vin, model, engine_capacity, horsepower, price, transmission) VALUES
 ('1HGCM82633A123456', 'Camry', 2.5, 203, 24000.00, 'Automatic'),
 ('2HGFG3B53GH123456', 'Civic', 2.0, 158, 22000.00, 'Manual'),
 ('1FA6P8CF0J1234567', 'Mustang', 5.0, 450, 55000.00, 'Automatic');
 
--- Inserting data into Motorcycle table
 INSERT INTO Motorcycle (vin, model, engine_capacity, horsepower, price, type) VALUES
 ('JYARN28E9FA123456', 'YZF-R1', 1.0, 200, 17000.00, 'Sport'),
 ('1HD1ZK3158K123456', 'Sportster', 1.2, 70, 12000.00, 'Cruiser'),
 ('JKBVNAF156A123456', 'Ninja', 0.9, 150, 14000.00, 'Sport');
 
--- Inserting data into Bicycle table
 INSERT INTO Bicycle (serial_number, model, gear_count, price, type) VALUES
 ('SN123456789', 'Domane', 22, 3500.00, 'Road'),
 ('SN987654321', 'Defy', 20, 3000.00, 'Road'),

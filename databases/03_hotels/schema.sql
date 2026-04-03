@@ -1,14 +1,9 @@
--- Database 3: Hotels
--- Schema and data for hotel bookings
-
--- Creating Hotel table
 CREATE TABLE Hotel (
 	ID_hotel SERIAL PRIMARY KEY,
 	name VARCHAR(255) NOT NULL,
 	location VARCHAR(255) NOT NULL
 );
 
--- Creating Room table
 CREATE TABLE Room (
 	ID_room SERIAL PRIMARY KEY,
 	ID_hotel INT,
@@ -18,7 +13,6 @@ CREATE TABLE Room (
 	FOREIGN KEY (ID_hotel) REFERENCES Hotel(ID_hotel)
 );
 
--- Creating Customer table
 CREATE TABLE Customer (
 	ID_customer SERIAL PRIMARY KEY,
 	name VARCHAR(255) NOT NULL,
@@ -26,7 +20,6 @@ CREATE TABLE Customer (
 	phone VARCHAR(20) NOT NULL
 );
 
--- Creating Booking table
 CREATE TABLE Booking (
 	ID_booking SERIAL PRIMARY KEY,
 	ID_room INT,
@@ -37,7 +30,6 @@ CREATE TABLE Booking (
 	FOREIGN KEY (ID_customer) REFERENCES Customer(ID_customer)
 );
 
--- Inserting data into Hotel table
 INSERT INTO Hotel (ID_hotel, name, location) VALUES
 (1, 'Grand Hotel', 'Paris, France'),
 (2, 'Ocean View Resort', 'Miami, USA'),
@@ -50,7 +42,6 @@ INSERT INTO Hotel (ID_hotel, name, location) VALUES
 (9, 'Business Suites', 'Tokyo, Japan'),
 (10, 'Eco-Friendly Hotel', 'Copenhagen, Denmark');
 
--- Inserting data into Room table
 INSERT INTO Room (ID_room, ID_hotel, room_type, price, capacity) VALUES
 (1, 1, 'Single', 150.00, 1),
 (2, 1, 'Double', 200.00, 2),
@@ -72,7 +63,6 @@ INSERT INTO Room (ID_room, ID_hotel, room_type, price, capacity) VALUES
 (18, 10, 'Single', 110.00, 1),
 (19, 10, 'Double', 160.00, 2);
 
--- Inserting data into Customer table
 INSERT INTO Customer (ID_customer, name, email, phone) VALUES
 (1, 'John Doe', 'john.doe@example.com', '+1234567890'),
 (2, 'Jane Smith', 'jane.smith@example.com', '+0987654321'),
@@ -85,7 +75,6 @@ INSERT INTO Customer (ID_customer, name, email, phone) VALUES
 (9, 'George Washington', 'george.washington@example.com', '+7788990011'),
 (10, 'Hannah Montana', 'hannah.montana@example.com', '+8899001122');
 
--- Inserting data into Booking table
 INSERT INTO Booking (ID_booking, ID_room, ID_customer, check_in_date, check_out_date) VALUES
 (1, 1, 1, '2025-05-01', '2025-05-05'),
 (2, 2, 2, '2025-05-02', '2025-05-06'),

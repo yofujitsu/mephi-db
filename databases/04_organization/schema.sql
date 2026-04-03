@@ -1,6 +1,3 @@
--- Database 4: Organization
--- Schema and data for company structure
-
 CREATE TABLE Departments (
     DepartmentID SERIAL PRIMARY KEY,
     DepartmentName VARCHAR(100) NOT NULL
@@ -41,7 +38,6 @@ CREATE TABLE Tasks (
     FOREIGN KEY (ProjectID) REFERENCES Projects(ProjectID) ON DELETE CASCADE
 );
 
--- Adding departments
 INSERT INTO Departments (DepartmentID, DepartmentName) VALUES
 (1, 'Отдел продаж'),
 (2, 'Отдел маркетинга'),
@@ -49,7 +45,6 @@ INSERT INTO Departments (DepartmentID, DepartmentName) VALUES
 (4, 'Отдел разработки'),
 (5, 'Отдел поддержки');
 
--- Adding roles
 INSERT INTO Roles (RoleID, RoleName) VALUES
 (1, 'Менеджер'),
 (2, 'Директор'),
@@ -58,7 +53,6 @@ INSERT INTO Roles (RoleID, RoleName) VALUES
 (5, 'Специалист по поддержке'),
 (6, 'Маркетолог');
 
--- Adding employees
 INSERT INTO Employees (EmployeeID, Name, Position, ManagerID, DepartmentID, RoleID) VALUES
 (1, 'Иван Иванов', 'Генеральный директор', NULL, 1, 3),
 (2, 'Петр Петров', 'Директор по продажам', 1, 1, 2),
@@ -91,7 +85,6 @@ INSERT INTO Employees (EmployeeID, Name, Position, ManagerID, DepartmentID, Role
 (29, 'Анастасия Анастасиевна', 'Специалист по поддержке', 7, 5, 5),
 (30, 'Валентин Валентинов', 'Разработчик', 6, 4, 4);
 
--- Adding projects
 INSERT INTO Projects (ProjectID, ProjectName, StartDate, EndDate, DepartmentID) VALUES
 (1, 'Проект A', '2025-01-01', '2025-12-31', 1),
 (2, 'Проект B', '2025-02-01', '2025-11-30', 2),
@@ -99,7 +92,6 @@ INSERT INTO Projects (ProjectID, ProjectName, StartDate, EndDate, DepartmentID) 
 (4, 'Проект D', '2025-04-01', '2025-09-30', 5),
 (5, 'Проект E', '2025-05-01', '2025-08-31', 3);
 
--- Adding tasks
 INSERT INTO Tasks (TaskID, TaskName, AssignedTo, ProjectID) VALUES
 (1, 'Задача 1: Подготовка отчета по продажам', 4, 1),
 (2, 'Задача 2: Анализ рынка', 9, 2),

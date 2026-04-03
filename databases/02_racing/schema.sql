@@ -1,7 +1,3 @@
--- Database 2: Racing
--- Schema and data for car racing
-
--- Creating Classes table
 CREATE TABLE Classes (
 	class VARCHAR(100) NOT NULL,
 	type VARCHAR(20) NOT NULL CHECK (type IN ('Racing', 'Street')),
@@ -12,7 +8,6 @@ CREATE TABLE Classes (
 	PRIMARY KEY (class)
 );
 
--- Creating Cars table
 CREATE TABLE Cars (
 	name VARCHAR(100) NOT NULL,
 	class VARCHAR(100) NOT NULL,
@@ -21,14 +16,12 @@ CREATE TABLE Cars (
 	FOREIGN KEY (class) REFERENCES Classes(class)
 );
 
--- Creating Races table
 CREATE TABLE Races (
 	name VARCHAR(100) NOT NULL,
 	date DATE NOT NULL,
 	PRIMARY KEY (name)
 );
 
--- Creating Results table
 CREATE TABLE Results (
 	car VARCHAR(100) NOT NULL,
 	race VARCHAR(100) NOT NULL,
@@ -38,7 +31,6 @@ CREATE TABLE Results (
 	FOREIGN KEY (race) REFERENCES Races(name)
 );
 
--- Inserting data into Classes table
 INSERT INTO Classes (class, type, country, numDoors, engineSize, weight) VALUES
 ('SportsCar', 'Racing', 'USA', 2, 3.5, 1500),
 ('Sedan', 'Street', 'Germany', 4, 2.0, 1200),
@@ -49,7 +41,6 @@ INSERT INTO Classes (class, type, country, numDoors, engineSize, weight) VALUES
 ('Luxury Sedan', 'Street', 'Germany', 4, 3.0, 1600),
 ('Pickup', 'Street', 'USA', 2, 2.8, 2000);
 
--- Inserting data into Cars table
 INSERT INTO Cars (name, class, year) VALUES
 ('Ford Mustang', 'SportsCar', 2020),
 ('BMW 3 Series', 'Sedan', 2019),
@@ -62,7 +53,6 @@ INSERT INTO Cars (name, class, year) VALUES
 ('Audi A4', 'Sedan', 2018),
 ('Nissan Rogue', 'SUV', 2020);
 
--- Inserting data into Races table
 INSERT INTO Races (name, date) VALUES
 ('Indy 500', '2023-05-28'),
 ('Le Mans', '2023-06-10'),
@@ -73,7 +63,6 @@ INSERT INTO Races (name, date) VALUES
 ('Nürburgring 24 Hours', '2023-06-17'),
 ('Pikes Peak International Hill Climb', '2023-06-25');
 
--- Inserting data into Results table
 INSERT INTO Results (car, race, position) VALUES
 ('Ford Mustang', 'Indy 500', 1),
 ('BMW 3 Series', 'Le Mans', 3),
